@@ -20,5 +20,7 @@
   <%= @vehicle.VIN %>
 </p>
 
-<%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
+<% if @vehicle.customer == current_customer %>
+	<%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
+<% end %>
 <%= link_to 'Back', vehicles_path %>

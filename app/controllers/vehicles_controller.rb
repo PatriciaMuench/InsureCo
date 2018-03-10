@@ -1,5 +1,13 @@
 class VehiclesController < ApplicationController
-  before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
+  before_action :set_vehicle, only: [:show, :edit, :update, :destroy, :authorize_customer]
+
+  # Only allow authenticated users to access these actions
+  before_action :authenticate_customer!, except: [:index, :show]
+  # may need to change that
+
+  # Only allow authorized users to access these actions
+  before_action :authorize_customer, only: [:edit, :update, :destroy]
+  # may need to change that
 
   # GET /vehicles
   # GET /vehicles.json
@@ -25,6 +33,9 @@ class VehiclesController < ApplicationController
   # POST /vehicles.json
   def create
     @vehicle = Vehicle.new(vehicle_params)
+
+    # same as doing @vehicle.customer_id = current_customer.id
+    @vehicle.customer = current_customer
 
     respond_to do |format|
       if @vehicle.save
@@ -71,4 +82,12 @@ class VehiclesController < ApplicationController
     def vehicle_params
       params.require(:vehicle).permit(:make, :model, :year, :VIN)
     end
+
+    def authorize_customer
+      unless @vehicle.customer == current_customer
+        redirect_to vehicles_url, notice: 'You may not update a vehicle that is not yours.'
+      end
+    end
+    # may need to change that
+
 end
