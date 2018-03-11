@@ -14,7 +14,8 @@
     <p class="alert"><%= alert %></p>
 
     <% if current_customer %>
-      <%= link_to "Sign Out", destroy_customer_session_path, method: :delete %>
+      <%= link_to "Sign Out", destroy_customer_session_path, method: :delete %> | 
+      <%= link_to "Edit Account", edit_customer_registration_path %>
     <% else %>
       <%= link_to "Sign In", new_customer_session_path %>
     <% end %>
