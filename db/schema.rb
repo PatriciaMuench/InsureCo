@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180308163036) do
     t.string "model"
     t.integer "year"
     t.string "VIN"
+    t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "customer_id"

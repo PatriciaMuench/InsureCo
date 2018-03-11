@@ -4,6 +4,7 @@ class Vehicle < ApplicationRecord
     validates :year, presence: true,
                     	length: { is: 4 }
     validates :VIN, presence: true   
+    validates :color, presence: true
 
     belongs_to :customer
     #may need to change that             	                	                	

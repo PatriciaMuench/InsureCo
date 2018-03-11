@@ -5,6 +5,7 @@ class CreateVehicles < ActiveRecord::Migration[5.1]
       t.string :model
       t.integer :year
       t.string :VIN
+      t.string :color
 
       t.timestamps
     end
