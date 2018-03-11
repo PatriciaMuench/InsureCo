@@ -2,17 +2,17 @@ class VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy, :authorize_customer]
 
   # Only allow authenticated users to access these actions
-  before_action :authenticate_customer!, except: [:index, :show]
+  before_action :authenticate_customer!
   # may need to change that
 
   # Only allow authorized users to access these actions
-  before_action :authorize_customer, only: [:edit, :update, :destroy]
+  before_action :authorize_customer, only: [:show, :edit, :update, :destroy]
   # may need to change that
 
   # GET /vehicles
   # GET /vehicles.json
   def index
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.where(customer: current_customer)
   end
 
   # GET /vehicles/1
@@ -85,7 +85,7 @@ class VehiclesController < ApplicationController
 
     def authorize_customer
       unless @vehicle.customer == current_customer
-        redirect_to vehicles_url, notice: 'You may not update a vehicle that is not yours.'
+        redirect_to vehicles_url, notice: 'You may not view or update a vehicle that is not yours.'
       end
     end
     # may need to change that
